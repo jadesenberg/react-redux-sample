@@ -4,7 +4,10 @@ import { selectBook } from '../actions/index';
 import { bindActionCreators } from 'redux';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Avatar from 'material-ui/Avatar';
+import classnames from 'classnames';
 
 class BookList extends Component {
 
@@ -20,12 +23,12 @@ class BookList extends Component {
         
         return this.props.books.map((book) => {
             return (
-                <MenuItem 
+                <ListItem 
+                    leftAvatar={<Avatar src={`/public/images/${book.image}`} />}
                     onClick = { () => this.props.selectBook(book) }
                     key = { book.id } 
-                    className = "list-group-item"> 
-                    { book.title } 
-                </MenuItem>
+                    primaryText={ book.title } 
+                /> 
             )
         })
     }
@@ -33,12 +36,14 @@ class BookList extends Component {
     render() {
         return (
             <AppBar
+                className={classnames('app-bar', {'expanded': this.state.open})}
                 onLeftIconButtonTouchTap={this.handleToggle.bind(this)} 
-                title="My App">
-                <Drawer 
-                    
-                    open={this.state.open}>
-                    { this.renderList() }
+                title="Test App">
+                <Drawer open={this.state.open}>
+                    <List>
+                        <Subheader>Manga List</Subheader>
+                        { this.renderList() }
+                    </List>
                 </Drawer>
             </AppBar>
         )
